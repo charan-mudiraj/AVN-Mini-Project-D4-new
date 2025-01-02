@@ -27,3 +27,30 @@ export interface SQL_DESC_QUERY {
   Default: string;
   Extra: string;
 }
+
+export type SemesterCode =
+  | "1-1"
+  | "1-2"
+  | "2-1"
+  | "2-2"
+  | "3-1"
+  | "3-2"
+  | "4-1"
+  | "4-2";
+
+export interface StudentResults {
+  htno: string;
+  sgpa: string;
+  semesterResults: {
+    semesterCode: SemesterCode;
+    cgpa: string;
+    total: string;
+    credits: string;
+  }[];
+}
+
+export interface Query {
+  query: string;
+  loading: boolean;
+  results: any[];
+}

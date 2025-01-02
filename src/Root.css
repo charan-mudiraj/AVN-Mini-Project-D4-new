@@ -1,0 +1,25 @@
+input.custom-cursor {
+  caret-color: transparent;
+}
+
+/* Add a pseudo-element for the custom blinking cursor */
+input.custom-cursor::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background-color: black;
+  animation: blink 1s step-end infinite;
+  position: absolute;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Position the custom cursor */
+input.custom-cursor {
+  position: relative;
+}

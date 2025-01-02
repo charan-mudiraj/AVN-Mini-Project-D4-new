@@ -8,8 +8,18 @@ export default function NavBar() {
   const items: MenuItem[] = [
     {
       label: "All Students Details",
-      icon: "pi pi-home",
-      command: () => navigate("/all"),
+      icon: "pi pi-users",
+      command: () => navigate("/details"),
+    },
+    {
+      label: "All Students Results",
+      icon: "pi pi-calculator",
+      command: () => navigate("/results"),
+    },
+    {
+      label: "Terminal",
+      icon: "pi pi-code",
+      command: () => navigate("/terminal"),
     },
   ];
 

@@ -1,12 +1,22 @@
-import React, { ReactNode, useEffect, useState } from "react";
-import { SQL_DESC_QUERY, StudentDetail } from "../types";
+import {
+  ReactNode,
+  useEffect,
+  useState,
+} from "react";
+import { StudentDetail } from "../types";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { capitalize, getQueryResults } from "../utils";
-import { MultiSelect, MultiSelectChangeEvent } from "primereact/multiselect";
+import {
+  capitalize,
+  getQueryResults,
+} from "../utils";
 import { RadioButton } from "primereact/radiobutton";
-import { Accordion, AccordionTab } from "primereact/accordion";
-import { get } from "http";
+import {
+  Accordion,
+  AccordionTab,
+} from "primereact/accordion";
+import { useLoaderData } from "react-router-dom";
+import { Paginator } from "primereact/paginator";
 
 interface ColumnMeta {
   field: string;
@@ -57,10 +67,15 @@ const ColumnsFilter = ({
   onChange,
 }: {
   column: ColumnMeta;
-  onChange: (col: ColumnMeta, value: boolean) => void;
+  onChange: (
+    col: ColumnMeta,
+    value: boolean
+  ) => void;
 }) => {
   const [value, setValue] = useState<boolean>(
-    initVisibleColumns.includes(column.field as StudentDetailField)
+    initVisibleColumns.includes(
+      column.field as StudentDetailField
+    )
   );
   return (
     <div
@@ -73,7 +88,9 @@ const ColumnsFilter = ({
       }}
     >
       <RadioButton checked={value} />
-      <p className="whitespace-nowrap">{column.header}</p>
+      <p className="whitespace-nowrap">
+        {column.header}
+      </p>
     </div>
   );
 };
@@ -87,7 +104,9 @@ const DisabledLayer = ({
 }) => {
   return (
     <div className="relative">
-      {disabled && <div className="absolute w-full h-full z-10" />}
+      {disabled && (
+        <div className="absolute w-full h-full z-10" />
+      )}
       <div
         className={`z-0 relative`}
         style={
@@ -102,45 +121,79 @@ const DisabledLayer = ({
   );
 };
 
-export default function AllStudentsDetails() {
-  const [details, setDetails] = useState<StudentDetail[]>([]);
-  const columns: ColumnMeta[] = allColumns.map((key) => ({
-    field: key,
-    header: capitalize(key),
-  }));
-  const [visibleColumns, setVisibleColumns] = useState<ColumnMeta[]>(
-    initVisibleColumns.map((col) => ({ field: col, header: capitalize(col) }))
-  );
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const getData = async (selectedCol: ColumnMeta[] = []) => {
-    setLoading(true);
-    try {
-      const data = await getQueryResults(
-        `SELECT ${[...visibleColumns, ...selectedCol]
-          .map((col) => col.field)
-          .join(",")} FROM ds_students`
-      );
-      setDetails(data);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setLoading(false);
+export const allStudentsDetailsloader =
+  async () => {
+    const res = await getQueryResults(
+      "SELECT COUNT(*) as total FROM ds_students"
+    );
+    if (res.error) {
+      return 0;
     }
+    return res.data[0].total;
+  };
+
+export default function AllStudentsDetails() {
+  const [details, setDetails] = useState<
+    StudentDetail[]
+  >([]);
+  const columns: ColumnMeta[] = allColumns.map(
+    (key) => ({
+      field: key,
+      header: capitalize(key),
+    })
+  );
+  const [visibleColumns, setVisibleColumns] =
+    useState<ColumnMeta[]>(
+      initVisibleColumns.map((col) => ({
+        field: col,
+        header: capitalize(col),
+      }))
+    );
+  const [loading, setLoading] =
+    useState<boolean>(false);
+  const [page, setPage] = useState<number>(1);
+  const [pageSize, setPageSize] =
+    useState<number>(5);
+  const totalCount = useLoaderData() as number;
+
+  const getData = async (
+    selectedCol: ColumnMeta[] = []
+  ) => {
+    setLoading(true);
+    const res = await getQueryResults(
+      `SELECT ${[
+        ...visibleColumns,
+        ...selectedCol,
+      ]
+        .map((col) => col.field)
+        .join(",")} FROM ds_students LIMIT ${
+        (page - 1) * pageSize
+      },${pageSize}`
+    );
+    if (!res.error) {
+      setDetails(res.data);
+    }
+
+    setLoading(false);
   };
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [page, pageSize]);
 
-  const onChangeColumnFilter = async (column: ColumnMeta, value: boolean) => {
+  const onChangeColumnFilter = async (
+    column: ColumnMeta,
+    value: boolean
+  ) => {
     await getData([column]);
     setVisibleColumns((prev) => {
       let arr: ColumnMeta[];
       if (value) {
         arr = [...prev, column];
       } else {
-        arr = prev.filter((col) => col.field !== column.field);
+        arr = prev.filter(
+          (col) => col.field !== column.field
+        );
       }
       return arr.sort((a, b) => {
         const indexA = initVisibleColumns.indexOf(
@@ -151,7 +204,8 @@ export default function AllStudentsDetails() {
         );
 
         // If either field is not found, move that object to the end
-        if (indexA === -1 && indexB === -1) return 0; // Both not found, keep their order
+        if (indexA === -1 && indexB === -1)
+          return 0; // Both not found, keep their order
         if (indexA === -1) return 1; // a.field not found, b comes first
         if (indexB === -1) return -1; // b.field not found, a comes first
 
@@ -176,7 +230,9 @@ export default function AllStudentsDetails() {
                       <ColumnsFilter
                         column={col}
                         key={i}
-                        onChange={onChangeColumnFilter}
+                        onChange={
+                          onChangeColumnFilter
+                        }
                       />
                     ))}
                   </div>
@@ -184,11 +240,24 @@ export default function AllStudentsDetails() {
               </AccordionTab>
             </Accordion>
           }
-          paginator
-          rows={5}
-          rowsPerPageOptions={[5, 10, 25, 50]}
+          // paginator
+          footer={
+            <Paginator
+              totalRecords={totalCount}
+              first={pageSize * (page - 1)}
+              rows={pageSize}
+              rowsPerPageOptions={[5, 10, 25, 50]}
+              onPageChange={(e) => {
+                setPage((e.page as number) + 1);
+                setPageSize(e.rows);
+              }}
+              template={{
+                layout:
+                  "PrevPageLink CurrentPageReport NextPageLink RowsPerPageDropdown",
+              }}
+            />
+          }
           className="border-[1px] rounded-xl"
-          paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"
         >
           {visibleColumns.map((col, i) => (
             <Column
