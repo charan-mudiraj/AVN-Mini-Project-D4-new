@@ -16,6 +16,15 @@ import Root from "./Root.tsx";
 import { Provider } from "jotai";
 import { atomStore } from "./atoms.ts";
 import Terminal from "./pages/Terminal.tsx";
+import SingleStudentDetails, {
+  singleStudentDetailsLoader,
+} from "./pages/SingleStudentDetails.tsx";
+import SingleStudentResult, {
+  singleStudentResultLoader,
+} from "./pages/SingleStudentResult.tsx";
+import Analytics, {
+  analyticsLoader,
+} from "./pages/Analytics.tsx";
 
 const router = createBrowserRouter([
   {
@@ -28,9 +37,24 @@ const router = createBrowserRouter([
         loader: allStudentsDetailsloader,
       },
       {
+        path: "/details/:ht_no",
+        element: <SingleStudentDetails />,
+        loader: singleStudentDetailsLoader,
+      },
+      {
         path: "/results",
         element: <AllStudentsResults />,
         loader: allStudentsResultsLoader,
+      },
+      {
+        path: "/results/:ht_no",
+        element: <SingleStudentResult />,
+        loader: singleStudentResultLoader,
+      },
+      {
+        path: "/results/analytics",
+        element: <Analytics />,
+        loader: analyticsLoader,
       },
       {
         path: "/terminal",
@@ -43,11 +67,11 @@ const router = createBrowserRouter([
 createRoot(
   document.getElementById("root")!
 ).render(
-  <Provider store={atomStore}>
-    <PrimeReactProvider>
-      <ThemeProvider>
+  <ThemeProvider>
+    <Provider store={atomStore}>
+      <PrimeReactProvider>
         <RouterProvider router={router} />
-      </ThemeProvider>
-    </PrimeReactProvider>
-  </Provider>
+      </PrimeReactProvider>
+    </Provider>
+  </ThemeProvider>
 );

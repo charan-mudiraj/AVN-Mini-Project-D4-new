@@ -646,12 +646,20 @@ body {
   left: 0.5rem;
 }
 
+.right-2 {
+  right: 0.5rem;
+}
+
 .right-5 {
   right: 1.25rem;
 }
 
 .top-0 {
   top: 0px;
+}
+
+.top-2 {
+  top: 0.5rem;
 }
 
 .top-\[1px\] {
@@ -664,6 +672,10 @@ body {
 
 .top-full {
   top: 100%;
+}
+
+.z-0 {
+  z-index: 0;
 }
 
 .z-10 {
@@ -680,10 +692,6 @@ body {
 
 .z-\[1\] {
   z-index: 1;
-}
-
-.z-0 {
-  z-index: 0;
 }
 
 .-mx-1 {
@@ -704,6 +712,10 @@ body {
   margin-left: auto;
 }
 
+.mr-1 {
+  margin-right: 0.25rem;
+}
+
 .mt-1\.5 {
   margin-top: 0.375rem;
 }
@@ -714,6 +726,10 @@ body {
 
 .inline-flex {
   display: inline-flex;
+}
+
+.grid {
+  display: grid;
 }
 
 .hidden {
@@ -734,6 +750,10 @@ body {
 
 .h-2 {
   height: 0.5rem;
+}
+
+.h-24 {
+  height: 6rem;
 }
 
 .h-3 {
@@ -760,12 +780,16 @@ body {
   height: var(--radix-navigation-menu-viewport-height);
 }
 
+.h-full {
+  height: 100%;
+}
+
 .h-px {
   height: 1px;
 }
 
-.h-full {
-  height: 100%;
+.w-1\/2 {
+  width: 50%;
 }
 
 .w-10 {
@@ -774,6 +798,10 @@ body {
 
 .w-2 {
   width: 0.5rem;
+}
+
+.w-24 {
+  width: 6rem;
 }
 
 .w-3 {
@@ -792,6 +820,10 @@ body {
   width: 1.2rem;
 }
 
+.w-\[22rem\] {
+  width: 22rem;
+}
+
 .w-full {
   width: 100%;
 }
@@ -799,6 +831,18 @@ body {
 .w-max {
   width: -moz-max-content;
   width: max-content;
+}
+
+.w-1\/4 {
+  width: 25%;
+}
+
+.w-2\/4 {
+  width: 50%;
+}
+
+.w-3\/5 {
+  width: 60%;
 }
 
 .min-w-\[8rem\] {
@@ -859,6 +903,10 @@ body {
   list-style-type: none;
 }
 
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .flex-col {
   flex-direction: column;
 }
@@ -879,24 +927,24 @@ body {
   justify-content: center;
 }
 
+.justify-between {
+  justify-content: space-between;
+}
+
 .gap-2 {
   gap: 0.5rem;
 }
 
-.gap-4 {
-  gap: 1rem;
+.gap-3 {
+  gap: 0.75rem;
+}
+
+.gap-5 {
+  gap: 1.25rem;
 }
 
 .gap-8 {
   gap: 2rem;
-}
-
-.gap-10 {
-  gap: 2.5rem;
-}
-
-.gap-9 {
-  gap: 2.25rem;
 }
 
 .space-x-1 > :not([hidden]) ~ :not([hidden]) {
@@ -905,12 +953,34 @@ body {
   margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
+.space-y-10 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(2.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(2.5rem * var(--tw-space-y-reverse));
+}
+
+.self-center {
+  align-self: center;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
 .overflow-hidden {
   overflow: hidden;
 }
 
 .whitespace-nowrap {
   white-space: nowrap;
+}
+
+.text-wrap {
+  text-wrap: wrap;
+}
+
+.rounded-full {
+  border-radius: 9999px;
 }
 
 .rounded-md {
@@ -941,6 +1011,16 @@ body {
   border-color: hsl(var(--input));
 }
 
+.border-slate-400 {
+  --tw-border-opacity: 1;
+  border-color: rgb(148 163 184 / var(--tw-border-opacity));
+}
+
+.bg-\[\#0d1117\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(13 17 23 / var(--tw-bg-opacity));
+}
+
 .bg-background {
   background-color: hsl(var(--background));
 }
@@ -965,26 +1045,21 @@ body {
   background-color: hsl(var(--primary));
 }
 
-.bg-red-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
-}
-
 .bg-secondary {
   background-color: hsl(var(--secondary));
 }
 
-.bg-black {
+.bg-slate-600 {
   --tw-bg-opacity: 1;
-  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
-}
-
-.bg-opacity-50 {
-  --tw-bg-opacity: 0.5;
+  background-color: rgb(71 85 105 / var(--tw-bg-opacity));
 }
 
 .fill-current {
   fill: currentColor;
+}
+
+.p-0\.5 {
+  padding: 0.125rem;
 }
 
 .p-1 {
@@ -993,6 +1068,14 @@ body {
 
 .p-10 {
   padding: 2.5rem;
+}
+
+.p-3 {
+  padding: 0.75rem;
+}
+
+.p-5 {
+  padding: 1.25rem;
 }
 
 .p-7 {
@@ -1024,9 +1107,19 @@ body {
   padding-bottom: 0.375rem;
 }
 
+.py-10 {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
 .py-2 {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+}
+
+.py-5 {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
 }
 
 .pl-8 {
@@ -1037,9 +1130,18 @@ body {
   padding-right: 0.5rem;
 }
 
+.text-center {
+  text-align: center;
+}
+
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
 }
 
 .text-xs {

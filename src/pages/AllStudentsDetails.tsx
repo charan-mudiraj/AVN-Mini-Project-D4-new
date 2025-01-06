@@ -15,7 +15,10 @@ import {
   Accordion,
   AccordionTab,
 } from "primereact/accordion";
-import { useLoaderData } from "react-router-dom";
+import {
+  useLoaderData,
+  useNavigate,
+} from "react-router-dom";
 import { Paginator } from "primereact/paginator";
 
 interface ColumnMeta {
@@ -52,7 +55,6 @@ const allColumns: StudentDetailField[] = [
   "email_id",
   "religion",
   "admission_category",
-  "aadhaar_card_no",
   "photo",
 ];
 
@@ -155,6 +157,7 @@ export default function AllStudentsDetails() {
   const [pageSize, setPageSize] =
     useState<number>(5);
   const totalCount = useLoaderData() as number;
+  const navigate = useNavigate();
 
   const getData = async (
     selectedCol: ColumnMeta[] = []
@@ -221,6 +224,10 @@ export default function AllStudentsDetails() {
         <DataTable
           value={details}
           stripedRows
+          selectionMode={"single"}
+          onSelectionChange={(e) =>
+            navigate(`/details/${e.value.ht_no}`)
+          }
           header={
             <Accordion>
               <AccordionTab header="Filter Columns">
@@ -262,11 +269,28 @@ export default function AllStudentsDetails() {
           {visibleColumns.map((col, i) => (
             <Column
               key={i}
-              field={col.field}
               header={col.header}
               sortable={sortableColumns.includes(
                 col.field as StudentDetailField
               )}
+              body={(rowData) => {
+                const val = rowData[col.field];
+                if (
+                  typeof val === "string" &&
+                  val.startsWith("https")
+                ) {
+                  return (
+                    <img
+                      src={val}
+                      style={{
+                        height: "4rem",
+                        borderRadius: "6px",
+                      }}
+                    />
+                  );
+                }
+                return val;
+              }}
             />
           ))}
         </DataTable>

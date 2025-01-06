@@ -48,3 +48,57 @@ export const getQueryResults = async (
     return { data: error ? [] : data, error };
   }
 };
+
+export function jsonToTable(jsonObject: any) {
+  const keys = Object.keys(jsonObject[0]);
+  const rows = jsonObject.map((obj: any) =>
+    keys.map((key) =>
+      typeof obj[key] === "object"
+        ? JSON.stringify(obj[key])
+        : String(obj[key])
+    )
+  );
+
+  const columnWidths = keys.map((key, index) =>
+    Math.max(
+      key.length,
+      ...rows.map((row: any) => row[index].length)
+    )
+  );
+
+  const createLine = (char: any, joint = "+") =>
+    joint +
+    columnWidths
+      .map((width) => char.repeat(width + 2))
+      .join(joint) +
+    joint;
+
+  const createRow = (
+    data: any,
+    separator = "|"
+  ) =>
+    separator +
+    data
+      .map(
+        (value: any, index: any) =>
+          ` ${value.padEnd(columnWidths[index])} `
+      )
+      .join(separator) +
+    separator;
+
+  const topLine = createLine("-");
+  const header = createRow(keys);
+  const separatorLine = createLine("-");
+  const body = rows
+    .map((row: any) => createRow(row))
+    .join("\n");
+  const bottomLine = createLine("-");
+
+  return [
+    topLine,
+    header,
+    separatorLine,
+    body,
+    bottomLine,
+  ].join("\n");
+}

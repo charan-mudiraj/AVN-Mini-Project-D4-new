@@ -23,3 +23,31 @@ input.custom-cursor::after {
 input.custom-cursor {
   position: relative;
 }
+
+span.token.operator {
+  background-color: transparent !important;
+}
+
+.p-sidebar-header {
+  display: none;
+}
+
+.p-sidebar.p-component.p-ripple-disabled.p-sidebar-enter-done {
+  border-radius: 14px 14px 0 0;
+}
+
+::-webkit-scrollbar {
+  background-color: transparent;
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: white;
+  border-radius: 10px;
+}
+
+.graph_container {
+  border: 1px solid slategray;
+  border-radius: 10px;
+  padding: 1.25rem;
+}

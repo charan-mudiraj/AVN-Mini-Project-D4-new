@@ -8,8 +8,13 @@ import {
 import { Column } from "primereact/column";
 import { ColumnGroup } from "primereact/columngroup";
 import { Row } from "primereact/row";
-import { useLoaderData } from "react-router-dom";
+import {
+  useLoaderData,
+  useNavigate,
+} from "react-router-dom";
 import { Paginator } from "primereact/paginator";
+import { Chart } from "primereact/chart";
+import { Button } from "../components/ui/button";
 
 const semestersCodes: SemesterCode[] = [
   "1-1",
@@ -20,7 +25,7 @@ const semestersCodes: SemesterCode[] = [
 ];
 
 const query = (page: number, pageSize: number) =>
-  `SELECT A.htno, A.total AS sgpa, JSON_ARRAYAGG(JSON_OBJECT('semesterCode', B.semester_code, 'total', B.total, 'credits', B.credits, 'cgpa', B.cgpa)) AS semesterResults from results_totals A JOIN semester_results B ON A.htno = B.htno GROUP BY A.htno,A.total LIMIT ${
+  `SELECT A.htno, A.total AS cgpa, JSON_ARRAYAGG(JSON_OBJECT('semesterCode', B.semester_code, 'total', B.total, 'credits', B.credits, 'sgpa', B.cgpa)) AS semesterResults FROM results_totals A JOIN semester_results B ON A.htno = B.htno GROUP BY A.htno,A.total LIMIT ${
     (page - 1) * pageSize
   }, ${pageSize}`;
 
@@ -44,6 +49,7 @@ export default function AllStudentsResults() {
   const [pageSize, setPageSize] =
     useState<number>(5);
   const totalCount = useLoaderData() as number;
+  const navigate = useNavigate();
 
   const getData = async () => {
     setLoading(true);
@@ -62,10 +68,22 @@ export default function AllStudentsResults() {
 
   return (
     <>
+      <Button
+        variant="outline"
+        onClick={() =>
+          navigate("/results/analytics")
+        }
+      >
+        Analytics
+      </Button>
       {results.length > 0 ? (
         <DataTable
           value={results}
           stripedRows
+          selectionMode={"single"}
+          onSelectionChange={(e) =>
+            navigate(`/results/${e.value.htno}`)
+          }
           headerColumnGroup={
             <ColumnGroup>
               <Row>
@@ -74,7 +92,7 @@ export default function AllStudentsResults() {
                   rowSpan={2}
                 />
                 <Column
-                  header={"SGPA"}
+                  header={"CGPA"}
                   rowSpan={2}
                 />
                 <Column
@@ -108,11 +126,10 @@ export default function AllStudentsResults() {
           className="border-[1px] rounded-xl"
         >
           <Column field={"htno"} />
-          <Column field={"sgpa"} />
-          {semestersCodes.map((code, i) => (
+          <Column field={"cgpa"} />
+          {semestersCodes.map((_, i) => (
             <Column
-              field={`semesterResults.${i}.cgpa`}
-              header={`Semester ${code} CGPA`}
+              field={`semesterResults.${i}.sgpa`}
             />
           ))}
         </DataTable>
@@ -123,6 +140,8 @@ export default function AllStudentsResults() {
             : "Failed to Fetch"}
         </p>
       )}
+
+      <Chart />
     </>
   );
 }

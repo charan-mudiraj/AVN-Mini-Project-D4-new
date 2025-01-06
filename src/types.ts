@@ -15,7 +15,6 @@ export interface StudentDetail {
   email_id: string;
   religion: string;
   admission_category: string;
-  aadhaar_card_no: string;
   photo: string;
 }
 
@@ -40,12 +39,21 @@ export type SemesterCode =
 
 export interface StudentResults {
   htno: string;
-  sgpa: string;
+  cgpa: string;
   semesterResults: {
     semesterCode: SemesterCode;
-    cgpa: string;
+    sgpa: string;
     total: string;
     credits: string;
+    subjectResults: {
+      subjectCode: string;
+      subjectName: string;
+      subjectInternal: string;
+      subjectExternal: string;
+      subjectTotal: string;
+      subjectGrade: string;
+      subjectCredits: string;
+    }[];
   }[];
 }
 

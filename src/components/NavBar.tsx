@@ -1,3 +1,4 @@
+import { SquareTerminal } from "lucide-react";
 import { Menubar } from "primereact/menubar";
 import { MenuItem } from "primereact/menuitem";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +19,9 @@ export default function NavBar() {
     },
     {
       label: "Terminal",
-      icon: "pi pi-code",
+      icon: (
+        <SquareTerminal className="p-0.5 mr-1" />
+      ),
       command: () => navigate("/terminal"),
     },
   ];
@@ -26,6 +29,9 @@ export default function NavBar() {
   return (
     <Menubar
       className="fixed top-0 w-full z-30"
+      style={{
+        height: "3.7rem",
+      }}
       model={items}
       start={
         <div
