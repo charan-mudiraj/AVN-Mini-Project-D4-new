@@ -29,7 +29,14 @@ export const getQueryResults = async (
     const res = await fetch(
       `${
         import.meta.env.VITE_API_STUDENTS
-      }/?exec=${query}`
+      }/?exec=${query}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
     );
     const resData = (await res.json()) as any;
     if (resData.error) {
