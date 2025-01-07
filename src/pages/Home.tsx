@@ -6,12 +6,11 @@ import {
 } from "lucide-react";
 
 export default function Home() {
-  //   import "../../bootstrap.css";
   return (
     <>
       <link
         rel="stylesheet"
-        href="../../bootstrap.css"
+        href="bootstrap.css"
       />
       <div className="my-5">
         <div className="text-center bg-gradient-to-r from-[#374151] to-[#1f2937] shadow-xl">
