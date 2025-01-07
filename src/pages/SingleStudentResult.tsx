@@ -79,7 +79,7 @@ export default function SingleStudentResult() {
         </DataTable>
       ))}
 
-      <div className="flex gap-5">
+      <div className="flex gap-5 graph_container bg-gradient-to-r to-[#374151] from-[#1f2937]">
         <Chart
           className="w-full"
           type="bar"
@@ -118,12 +118,26 @@ export default function SingleStudentResult() {
           options={{
             scales: {
               y: {
+                ticks: {
+                  color: "white",
+                },
                 beginAtZero: true,
                 max: 10,
               },
+              x: {
+                ticks: {
+                  color: "white",
+                },
+              },
             },
             plugins: {
+              legend: {
+                labels: {
+                  color: "white",
+                },
+              },
               title: {
+                color: "white",
                 display: true,
                 text: "Semester VS SGPA",
               },
@@ -176,7 +190,13 @@ export default function SingleStudentResult() {
           }}
           options={{
             plugins: {
+              legend: {
+                labels: {
+                  color: "white",
+                },
+              },
               title: {
+                color: "white",
                 display: true,
                 text: "Semester VS Score(out of 1000)",
               },

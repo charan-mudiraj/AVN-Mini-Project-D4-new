@@ -56,10 +56,12 @@ export default function Analytics() {
 
   return (
     <div className="p-10">
-      <h2>Semester Wise Top 10</h2>
+      <p className="text-xl font-bold">
+        Overall Top 10 (All Semesters)
+      </p>
       <div style={{ height: "10px" }} />
       <Chart
-        className="w-full graph_container"
+        className="w-full graph_container bg-gradient-to-r to-[#374151] from-[#1f2937]"
         type="bar"
         data={{
           labels: overallTop10.map(
@@ -91,22 +93,40 @@ export default function Analytics() {
         }}
         options={{
           indexAxis: "y",
+
           scales: {
             x: {
+              ticks: {
+                color: "white",
+              },
               beginAtZero: true,
               max: 10,
             },
+            y: {
+              ticks: {
+                color: "white",
+              },
+            },
           },
+
           plugins: {
+            legend: {
+              labels: {
+                color: "white",
+              },
+            },
             title: {
               display: true,
+              color: "white",
               text: "Htno VS CGPA (TOP 10)",
             },
           },
         }}
       />
       <div style={{ height: "30px" }} />
-      <h3>Semester Wise Top 10</h3>
+      <p className="font-bold text-xl">
+        Semester Wise Top 10
+      </p>
       <div style={{ height: "10px" }} />
       <div className="grid-cols-2 grid gap-5">
         {[
@@ -117,7 +137,7 @@ export default function Analytics() {
           sem5Top10,
         ].map((top10, i) => (
           <Chart
-            className="w-full graph_container"
+            className="w-full graph_container bg-gradient-to-r to-[#374151] from-[#1f2937]"
             type="bar"
             data={{
               labels: top10.map(
@@ -152,12 +172,27 @@ export default function Analytics() {
               indexAxis: "y",
               scales: {
                 x: {
+                  ticks: {
+                    color: "white",
+                  },
                   beginAtZero: true,
                   max: 10,
                 },
+                y: {
+                  ticks: {
+                    color: "white",
+                  },
+                },
               },
+
               plugins: {
+                legend: {
+                  labels: {
+                    color: "white",
+                  },
+                },
                 title: {
+                  color: "white",
                   display: true,
                   text: `Htno VS SGPA (TOP 10) (${top10[0].semesterResults[i].semesterCode})`,
                 },

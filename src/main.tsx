@@ -67,7 +67,7 @@ const router = createBrowserRouter([
 createRoot(
   document.getElementById("root")!
 ).render(
-  <ThemeProvider>
+  <ThemeProvider defaultTheme="dark">
     <Provider store={atomStore}>
       <PrimeReactProvider>
         <RouterProvider router={router} />

@@ -28,7 +28,7 @@ export default function NavBar() {
 
   return (
     <Menubar
-      className="fixed top-0 w-full z-30"
+      className="fixed top-0 w-full z-30 shadow-md"
       style={{
         height: "3.7rem",
       }}
@@ -40,7 +40,7 @@ export default function NavBar() {
             navigate("/");
           }}
         >
-          Student Portal
+          Students Portal
         </div>
       }
     />

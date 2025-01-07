@@ -1,18 +1,19 @@
 import {
   LoaderFunctionArgs,
   useLoaderData,
+  useNavigate,
 } from "react-router-dom";
 import {
   capitalize,
   getQueryResults,
 } from "../utils";
 import { StudentDetail } from "../types";
+import { Button } from "../components/ui/button";
 
 export const singleStudentDetailsLoader = async ({
   params,
 }: LoaderFunctionArgs) => {
   const { ht_no } = params;
-  console.log(ht_no);
   if (!ht_no || ht_no.length !== 10) {
     throw new Error("Invalid Hall Ticket Number");
   }
@@ -30,8 +31,9 @@ const ProfileCard = ({
 }: {
   data: StudentDetail;
 }) => {
+  const navigate = useNavigate();
   return (
-    <div className="rounded-xl border-1 border-slate-400 p-5 flex flex-col gap-3 bg-slate-600 w-[22rem]">
+    <div className="rounded-xl  border-[1px] border-[#464646] p-5 flex flex-col gap-3  w-[22rem] bg-gradient-to-r to-[#374151] from-[#1f2937]">
       <img
         src={data.photo}
         className="rounded-full shadow-lg h-24 w-24 self-center"
@@ -66,6 +68,14 @@ const ProfileCard = ({
           );
         }
       )}
+      <Button
+        onClick={() =>
+          navigate(`/results/${data.ht_no}`)
+        }
+        className="bg-[#0d6efd] text-white hover:bg-[#224c83] hover:text-gray-300"
+      >
+        Show Exam Results
+      </Button>
     </div>
   );
 };

@@ -5,8 +5,8 @@ import { useEffect } from "react";
 
 const primereactThemes: any = {
   light:
-    "primereact/resources/themes/lara-light-cyan/theme.css",
-  dark: "primereact/resources/themes/lara-dark-cyan/theme.css",
+    "primereact/resources/themes/lara-light-amber/theme.css",
+  dark: "primereact/resources/themes/lara-dark-amber/theme.css",
 };
 
 export function ThemeModeToggle() {

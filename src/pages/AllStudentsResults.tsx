@@ -13,7 +13,6 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { Paginator } from "primereact/paginator";
-import { Chart } from "primereact/chart";
 import { Button } from "../components/ui/button";
 
 const semestersCodes: SemesterCode[] = [
@@ -67,15 +66,23 @@ export default function AllStudentsResults() {
   }, [page, pageSize]);
 
   return (
-    <>
-      <Button
-        variant="outline"
-        onClick={() =>
-          navigate("/results/analytics")
-        }
-      >
-        Analytics
-      </Button>
+    <div className="p-10">
+      <div className="relative">
+        <div className="text-2xl text-center font-sans border-[1px] border-[#464646] rounded-xl py-2 bg-gradient-to-r from-[#374151] to-[#1f2937] mb-5">
+          All Students Results
+        </div>
+        <div className="absolute z-20 right-1.5 top-1.5">
+          <Button
+            onClick={() =>
+              navigate("/results/analytics")
+            }
+            className="bg-[#0d6efd] text-white hover:bg-[#224c83] hover:text-gray-300"
+          >
+            View Analytics (Top 10)
+          </Button>
+        </div>
+      </div>
+
       {results.length > 0 ? (
         <DataTable
           value={results}
@@ -123,7 +130,6 @@ export default function AllStudentsResults() {
               }}
             />
           }
-          className="border-[1px] rounded-xl"
         >
           <Column field={"htno"} />
           <Column field={"cgpa"} />
@@ -140,8 +146,6 @@ export default function AllStudentsResults() {
             : "Failed to Fetch"}
         </p>
       )}
-
-      <Chart />
-    </>
+    </div>
   );
 }

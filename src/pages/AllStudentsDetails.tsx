@@ -220,10 +220,14 @@ export default function AllStudentsDetails() {
 
   return (
     <div className="p-10">
+      <div className="text-2xl text-center font-sans border-[1px] border-[#464646] rounded-xl py-2 bg-gradient-to-r from-[#374151] to-[#1f2937] mb-5">
+        All Students Details
+      </div>
       {details.length > 0 && (
         <DataTable
           value={details}
           stripedRows
+          showGridlines
           selectionMode={"single"}
           onSelectionChange={(e) =>
             navigate(`/details/${e.value.ht_no}`)

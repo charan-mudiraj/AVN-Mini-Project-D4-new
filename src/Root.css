@@ -2,6 +2,31 @@ input.custom-cursor {
   caret-color: transparent;
 }
 
+body {
+  background-image: linear-gradient(
+    to bottom left,
+    var(--tw-gradient-stops)
+  );
+  --tw-gradient-from: #000
+    var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(0 0 0 / 0)
+    var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from),
+    var(--tw-gradient-to);
+
+  background-color: #4a525f;
+
+  /* Ensure gradient covers the entire viewport */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Optional: makes the background stationary */
+}
+
+td,
+th {
+  border: 1px solid rgb(70, 70, 70);
+}
+
 /* Add a pseudo-element for the custom blinking cursor */
 input.custom-cursor::after {
   content: "";
