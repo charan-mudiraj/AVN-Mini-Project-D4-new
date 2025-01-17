@@ -1,8 +1,5 @@
 import { createRoot } from "react-dom/client";
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "./components/ui/theme-provider.tsx";
 import { PrimeReactProvider } from "primereact/api";
 import "primeicons/primeicons.css";
@@ -22,9 +19,8 @@ import SingleStudentDetails, {
 import SingleStudentResult, {
   singleStudentResultLoader,
 } from "./pages/SingleStudentResult.tsx";
-import Analytics, {
-  analyticsLoader,
-} from "./pages/Analytics.tsx";
+import Analytics, { analyticsLoader } from "./pages/Analytics.tsx";
+import AttendancePerformance from "./pages/AttendancePerformance.tsx";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +53,10 @@ const router = createBrowserRouter([
         loader: analyticsLoader,
       },
       {
+        path: "/attendance",
+        element: <AttendancePerformance />,
+      },
+      {
         path: "/terminal",
         element: <Terminal />,
       },
@@ -64,9 +64,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-createRoot(
-  document.getElementById("root")!
-).render(
+createRoot(document.getElementById("root")!).render(
   <ThemeProvider defaultTheme="dark">
     <Provider store={atomStore}>
       <PrimeReactProvider>

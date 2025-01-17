@@ -10,12 +10,12 @@ import { jsonToTable } from "../utils";
 
 export default function QueryPreview() {
   const query = useAtomValue(queryAtom);
-  const [showSidebar, setShowSidebar] =
-    useState<boolean>(false);
+  const [showSidebar, setShowSidebar] = useState<boolean>(false);
   const location = useLocation();
   const showBtn =
     location.pathname !== "/" &&
-    location.pathname !== "/terminal";
+    location.pathname !== "/terminal" &&
+    location.pathname !== "/attendance";
 
   return (
     <>
@@ -28,33 +28,18 @@ export default function QueryPreview() {
         header={""}
         onHide={() => setShowSidebar(false)}
       >
-        <p className="text-center w-full text-xl py-5">
-          Query Viewer
-        </p>
-        <CodeViewer
-          lang="sql"
-          bg
-          copyBtn
-          data={query?.query ?? ""}
-        />
+        <p className="text-center w-full text-xl py-5">Query Viewer</p>
+        <CodeViewer lang="sql" bg copyBtn data={query?.query ?? ""} />
         <div style={{ height: "1rem" }} />
-        {query?.results &&
-          query.results.length > 0 && (
-            <CodeViewer
-              lang="none"
-              bg
-              data={jsonToTable(query.results)}
-              noWrap
-            />
-          )}
+        {query?.results && query.results.length > 0 && (
+          <CodeViewer lang="none" bg data={jsonToTable(query.results)} noWrap />
+        )}
       </Sidebar>
       {showBtn && (
         <Button
           variant="outline"
           size="icon"
-          onClick={() =>
-            setShowSidebar((prev) => !prev)
-          }
+          onClick={() => setShowSidebar((prev) => !prev)}
           className="fixed z-30 right-5 bottom-5"
         >
           <Code className="p-0.5" />

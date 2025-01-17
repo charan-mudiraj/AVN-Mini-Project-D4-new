@@ -1,4 +1,4 @@
-import { SquareTerminal } from "lucide-react";
+import { SquareTerminal, UserRoundCheck } from "lucide-react";
 import { Menubar } from "primereact/menubar";
 import { MenuItem } from "primereact/menuitem";
 import { useNavigate } from "react-router-dom";
@@ -18,10 +18,13 @@ export default function NavBar() {
       command: () => navigate("/results"),
     },
     {
+      label: "Attendance Performance",
+      icon: <UserRoundCheck className="p-0.5 mr-1" />,
+      command: () => navigate("/attendance"),
+    },
+    {
       label: "Terminal",
-      icon: (
-        <SquareTerminal className="p-0.5 mr-1" />
-      ),
+      icon: <SquareTerminal className="p-0.5 mr-1" />,
       command: () => navigate("/terminal"),
     },
   ];
